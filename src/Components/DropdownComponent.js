@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const DropdownComponent = () => {
+const DropdownComponent = (props) => {
 
     useEffect(()=>{
         async function fetchData(){
@@ -49,6 +49,7 @@ const DropdownComponent = () => {
             bitCoinRate:state.bpi[e.target.value].rate,
             description:state.bpi[e.target.value].description
         }))
+        props.setDropdownValue(e.target.value);
     }
     return (
         <div style={{width:350}}>
