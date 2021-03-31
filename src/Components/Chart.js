@@ -16,7 +16,6 @@ const Chart = (props) => {
 
     useEffect(()=>{
         async function getTrend(){
-            // currency=EUR&start=2020-09-01&end=2020-09-10
             let end = new Date();
             let start = new Date();
             start.setDate(start.getDate()-60);
@@ -45,7 +44,28 @@ const Chart = (props) => {
         getTrend()
     },[props.dropdownValue])
 
-
+    const options = {
+        responsive: true,
+        scales:{
+            xAxes:[{
+                ticks:{
+                    display: true,
+                    autoSkip: true,
+                    maxTicksLimit: 11,
+                    maxRotation: 0,
+                    minRottaion: 0
+                }
+            }],
+            yAxes:[{
+                gridLines:{
+                    display: false
+                }
+            }]
+        },
+        tooltips:{
+            mode:'index'
+        }
+    }
 
 
     return <div>
@@ -63,6 +83,7 @@ const Chart = (props) => {
                 }
             ]
         }}
+        options={options}
         />:<h1>{state.error}</h1>}
     </div>
 }

@@ -28,7 +28,9 @@ const DropdownComponent = (props) => {
             });
             const result = await response.json();
             if(response.ok){
-                setState(ps=>({...ps,bpi:result.bpi}))
+                setState(ps=>({...ps,bpi:result.bpi,error:""}))
+            }else{
+                setState(ps=>({...ps,error:"Something Went Wrong"}))
             }
         }
         fetchData();
@@ -38,18 +40,21 @@ const DropdownComponent = (props) => {
         dropdown:"",
         bpi:"",
         bitCoinRate:"",
-        description:""
+        description:"",
+        error:""
     })
 
     const styles = useStyles();
 
     const handleChange = (e) => {
+        if(state.error===""){
         setState(ps=>({...ps,
             dropdown:e.target.values,
-            bitCoinRate:state.bpi[e.target.value].rate,
+            bitCoinRate:state.bpi[e.target.value].rate_float,
             description:state.bpi[e.target.value].description
         }))
         props.setDropdownValue(e.target.value);
+        }
     }
     return (
         <div style={{width:350}}>
@@ -67,7 +72,7 @@ const DropdownComponent = (props) => {
           <option value={"EUR"}>Euro (EUR)</option>
         </Select>
         </FormControl>
-        <div style={{marginLeft:"8px",fontWeight:"bold",fontSize:"2.2rem"}}>{`${state.bitCoinRate} ${state.description}`}</div>
+        <div style={{marginLeft:"8px",fontWeight:"bold",fontSize:"2.6rem"}}>{state.error===""?`${state.bitCoinRate!==""?state.bitCoinRate.toFixed(2):""} ${state.description}`:"Sorry Something isn't right please try again later"}</div>
     </div>
     </div>)
     
